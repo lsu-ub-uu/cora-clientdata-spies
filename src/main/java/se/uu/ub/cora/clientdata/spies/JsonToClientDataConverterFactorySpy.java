@@ -18,26 +18,25 @@
  */
 package se.uu.ub.cora.clientdata.spies;
 
-import se.uu.ub.cora.clientdata.converter.ClientDataToJsonConverterFactory;
-import se.uu.ub.cora.clientdata.converter.ClientDataToJsonConverterFactoryCreator;
+import se.uu.ub.cora.clientdata.converter.JsonToClientDataConverter;
+import se.uu.ub.cora.clientdata.converter.JsonToClientDataConverterFactory;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 
-public class ClientDataToJsonConverterFactoryCreatorSpy
-		implements ClientDataToJsonConverterFactoryCreator {
+public class JsonToClientDataConverterFactorySpy implements JsonToClientDataConverterFactory {
 
 	public MethodCallRecorder MCR = new MethodCallRecorder();
 	public MethodReturnValues MRV = new MethodReturnValues();
 
-	public ClientDataToJsonConverterFactoryCreatorSpy() {
+	public JsonToClientDataConverterFactorySpy() {
 		MCR.useMRV(MRV);
-		MRV.setDefaultReturnValuesSupplier("createFactory",
-				ClientDataToJsonConverterFactorySpy::new);
+
+		MRV.setDefaultReturnValuesSupplier("factor", JsonToClientDataConverterSpy::new);
 	}
 
 	@Override
-	public ClientDataToJsonConverterFactory createFactory() {
-		return (ClientDataToJsonConverterFactory) MCR.addCallAndReturnFromMRV();
+	public JsonToClientDataConverter factor(String json) {
+		return (JsonToClientDataConverter) MCR.addCallAndReturnFromMRV("json", json);
 	}
 
 }
