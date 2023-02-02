@@ -20,6 +20,7 @@ package se.uu.ub.cora.clientdata.spies;
 
 import se.uu.ub.cora.clientdata.converter.JsonToClientDataConverter;
 import se.uu.ub.cora.clientdata.converter.JsonToClientDataConverterFactory;
+import se.uu.ub.cora.json.parser.JsonObject;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 
@@ -30,13 +31,19 @@ public class JsonToClientDataConverterFactorySpy implements JsonToClientDataConv
 
 	public JsonToClientDataConverterFactorySpy() {
 		MCR.useMRV(MRV);
-
-		MRV.setDefaultReturnValuesSupplier("factor", JsonToClientDataConverterSpy::new);
+		MRV.setDefaultReturnValuesSupplier("factorUsingString", JsonToClientDataConverterSpy::new);
+		MRV.setDefaultReturnValuesSupplier("factorUsingJsonObject",
+				JsonToClientDataConverterSpy::new);
 	}
 
 	@Override
-	public JsonToClientDataConverter factor(String json) {
+	public JsonToClientDataConverter factorUsingString(String json) {
 		return (JsonToClientDataConverter) MCR.addCallAndReturnFromMRV("json", json);
+	}
+
+	@Override
+	public JsonToClientDataConverter factorUsingJsonObject(JsonObject jsonObject) {
+		return (JsonToClientDataConverter) MCR.addCallAndReturnFromMRV("jsonObject", jsonObject);
 	}
 
 }
