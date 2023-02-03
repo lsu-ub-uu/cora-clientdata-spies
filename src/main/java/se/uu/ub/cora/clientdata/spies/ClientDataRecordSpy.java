@@ -20,11 +20,12 @@ package se.uu.ub.cora.clientdata.spies;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 
 import se.uu.ub.cora.clientdata.ClientAction;
+import se.uu.ub.cora.clientdata.ClientActionLink;
 import se.uu.ub.cora.clientdata.ClientDataGroup;
 import se.uu.ub.cora.clientdata.ClientDataRecord;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
@@ -40,8 +41,7 @@ public class ClientDataRecordSpy implements ClientDataRecord {
 		MRV.setDefaultReturnValuesSupplier("getType", String::new);
 		MRV.setDefaultReturnValuesSupplier("getId", String::new);
 		MRV.setDefaultReturnValuesSupplier("getDataGroup", ClientDataGroupSpy::new);
-		MRV.setDefaultReturnValuesSupplier("hasActions", (Supplier<Boolean>) () -> false);
-		MRV.setDefaultReturnValuesSupplier("getActions", Collections::emptyList);
+		MRV.setDefaultReturnValuesSupplier("getActionLink", Optional::empty);
 		MRV.setDefaultReturnValuesSupplier("hasReadPermissions", (Supplier<Boolean>) () -> false);
 		MRV.setDefaultReturnValuesSupplier("getReadPermissions", Collections::emptySet);
 		MRV.setDefaultReturnValuesSupplier("hasWritePermissions", (Supplier<Boolean>) () -> false);
@@ -71,18 +71,13 @@ public class ClientDataRecordSpy implements ClientDataRecord {
 	}
 
 	@Override
-	public void addAction(ClientAction action) {
-		MCR.addCall("action", action);
+	public void addActionLink(ClientActionLink actionLink) {
+		MCR.addCall("actionLink", actionLink);
 	}
 
 	@Override
-	public boolean hasActions() {
-		return (boolean) MCR.addCallAndReturnFromMRV();
-	}
-
-	@Override
-	public List<ClientAction> getActions() {
-		return (List<ClientAction>) MCR.addCallAndReturnFromMRV();
+	public Optional<ClientActionLink> getActionLink(ClientAction action) {
+		return (Optional<ClientActionLink>) MCR.addCallAndReturnFromMRV("action", action);
 	}
 
 	@Override

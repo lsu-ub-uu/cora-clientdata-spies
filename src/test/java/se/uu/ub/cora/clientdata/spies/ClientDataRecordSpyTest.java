@@ -23,7 +23,7 @@ import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.testng.annotations.BeforeMethod;
@@ -115,45 +115,26 @@ public class ClientDataRecordSpyTest {
 	}
 
 	@Test
-	public void testAddAction() throws Exception {
+	public void testAddActionLink() throws Exception {
 		dataRecord.MCR = MCRSpy;
-		ClientAction someAction = ClientAction.BATCH_INDEX;
+		ClientActionLinkSpy someAction = new ClientActionLinkSpy();
 
-		dataRecord.addAction(someAction);
+		dataRecord.addActionLink(someAction);
 
-		mcrForSpy.assertParameter(ADD_CALL, 0, "action", someAction);
+		mcrForSpy.assertParameter(ADD_CALL, 0, "actionLink", someAction);
 	}
 
 	@Test
-	public void testDefaultHasActions() throws Exception {
-		assertFalse(dataRecord.hasActions());
+	public void testDefaultGetActionLink() throws Exception {
+		assertTrue(dataRecord.getActionLink(ClientAction.CREATE).isEmpty());
 	}
 
 	@Test
-	public void testHasActions() throws Exception {
+	public void testGetActionLink() throws Exception {
 		dataRecord.MCR = MCRSpy;
-		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, () -> true);
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, Optional::empty);
 
-		var returnedValue = dataRecord.hasActions();
-
-		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
-		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
-	}
-
-	@Test
-	public void testDefaultGetActions() throws Exception {
-		assertTrue(dataRecord.getActions() instanceof List<ClientAction>);
-	}
-
-	@Test
-	public void testGetActions() throws Exception {
-		dataRecord.MCR = MCRSpy;
-
-		List<ClientAction> actions = List.of(ClientAction.CREATE, ClientAction.DELETE);
-
-		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, () -> actions);
-
-		var returnedValue = dataRecord.getActions();
+		var returnedValue = dataRecord.getActionLink(ClientAction.CREATE);
 
 		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
 		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
