@@ -30,6 +30,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import se.uu.ub.cora.clientdata.ClientAction;
+import se.uu.ub.cora.clientdata.ClientDataRecordGroup;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 import se.uu.ub.cora.testutils.spies.MCRSpy;
@@ -90,25 +91,25 @@ public class ClientDataRecordSpyTest {
 	@Test
 	public void testSetDataGroup() throws Exception {
 		dataRecord.MCR = MCRSpy;
-		ClientDataGroupSpy dataGroup = new ClientDataGroupSpy();
+		ClientDataRecordGroupSpy dataRecordGroup = new ClientDataRecordGroupSpy();
 
-		dataRecord.setDataGroup(dataGroup);
+		dataRecord.setDataRecordGroup(dataRecordGroup);
 
-		mcrForSpy.assertParameter(ADD_CALL, 0, "dataGroup", dataGroup);
+		mcrForSpy.assertParameter(ADD_CALL, 0, "data" + "Group", dataRecordGroup);
 	}
 
 	@Test
 	public void testDefaultGetDataGroup() throws Exception {
-		assertTrue(dataRecord.getDataGroup() instanceof ClientDataGroupSpy);
+		assertTrue(dataRecord.getDataRecordGroup() instanceof ClientDataRecordGroup);
 	}
 
 	@Test
 	public void testGetDataGroup() throws Exception {
 		dataRecord.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
-				ClientDataGroupSpy::new);
+				ClientDataRecordGroupSpy::new);
 
-		var returnedValue = dataRecord.getDataGroup();
+		var returnedValue = dataRecord.getDataRecordGroup();
 
 		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
 		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);

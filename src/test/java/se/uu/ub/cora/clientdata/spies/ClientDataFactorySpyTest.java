@@ -80,9 +80,9 @@ public class ClientDataFactorySpyTest {
 
 	@Test
 	public void testDefaultFactorRecordUsingDataGroup() throws Exception {
-		ClientDataGroup dataGroupSpy = new ClientDataGroupSpy();
-		assertTrue(dataFactory
-				.factorRecordUsingDataGroup(dataGroupSpy) instanceof ClientDataRecordSpy);
+		ClientDataRecordGroup dataRecordGroupSpy = new ClientDataRecordGroupSpy();
+		assertTrue(dataFactory.factorRecordUsingDataRecordGroup(
+				dataRecordGroupSpy) instanceof ClientDataRecordSpy);
 	}
 
 	@Test
@@ -90,9 +90,9 @@ public class ClientDataFactorySpyTest {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataRecordSpy::new);
-		ClientDataGroup dataGroupSpy = new ClientDataGroupSpy();
+		ClientDataRecordGroupSpy dataGroupSpy = new ClientDataRecordGroupSpy();
 
-		ClientDataRecord retunedValue = dataFactory.factorRecordUsingDataGroup(dataGroupSpy);
+		ClientDataRecord retunedValue = dataFactory.factorRecordUsingDataRecordGroup(dataGroupSpy);
 
 		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
 		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "dataGroup", dataGroupSpy);

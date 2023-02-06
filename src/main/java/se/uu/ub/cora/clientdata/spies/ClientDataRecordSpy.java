@@ -26,8 +26,8 @@ import java.util.function.Supplier;
 
 import se.uu.ub.cora.clientdata.ClientAction;
 import se.uu.ub.cora.clientdata.ClientActionLink;
-import se.uu.ub.cora.clientdata.ClientDataGroup;
 import se.uu.ub.cora.clientdata.ClientDataRecord;
+import se.uu.ub.cora.clientdata.ClientDataRecordGroup;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 
@@ -40,7 +40,7 @@ public class ClientDataRecordSpy implements ClientDataRecord {
 		MCR.useMRV(MRV);
 		MRV.setDefaultReturnValuesSupplier("getType", String::new);
 		MRV.setDefaultReturnValuesSupplier("getId", String::new);
-		MRV.setDefaultReturnValuesSupplier("getDataGroup", ClientDataGroupSpy::new);
+		MRV.setDefaultReturnValuesSupplier("getDataRecordGroup", ClientDataRecordGroupSpy::new);
 		MRV.setDefaultReturnValuesSupplier("getActionLink", Optional::empty);
 		MRV.setDefaultReturnValuesSupplier("hasReadPermissions", (Supplier<Boolean>) () -> false);
 		MRV.setDefaultReturnValuesSupplier("getReadPermissions", Collections::emptySet);
@@ -60,14 +60,14 @@ public class ClientDataRecordSpy implements ClientDataRecord {
 	}
 
 	@Override
-	public void setDataGroup(ClientDataGroup dataGroup) {
+	public void setDataRecordGroup(ClientDataRecordGroup dataGroup) {
 		MCR.addCall("dataGroup", dataGroup);
 
 	}
 
 	@Override
-	public ClientDataGroup getDataGroup() {
-		return (ClientDataGroup) MCR.addCallAndReturnFromMRV();
+	public ClientDataRecordGroup getDataRecordGroup() {
+		return (ClientDataRecordGroup) MCR.addCallAndReturnFromMRV();
 	}
 
 	@Override
