@@ -20,9 +20,11 @@ package se.uu.ub.cora.clientdata.spies;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import se.uu.ub.cora.clientdata.ClientAction;
+import se.uu.ub.cora.clientdata.ClientActionLink;
 import se.uu.ub.cora.clientdata.ClientDataAttribute;
 import se.uu.ub.cora.clientdata.ClientDataResourceLink;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
@@ -45,11 +47,7 @@ public class ClientDataResourceLinkSpy implements ClientDataResourceLink {
 		MRV.setDefaultReturnValuesSupplier("getFileName", String::new);
 		MRV.setDefaultReturnValuesSupplier("getFileSize", String::new);
 		MRV.setDefaultReturnValuesSupplier("getMimeType", String::new);
-	}
-
-	@Override
-	public void addAction(ClientAction action) {
-		MCR.addCall("action", action);
+		MRV.setDefaultReturnValuesSupplier("getActionLink", Optional::empty);
 	}
 
 	@Override
@@ -132,4 +130,13 @@ public class ClientDataResourceLinkSpy implements ClientDataResourceLink {
 		return (String) MCR.addCallAndReturnFromMRV();
 	}
 
+	@Override
+	public void addActionLink(ClientActionLink actionLink) {
+		MCR.addCall("actionLink", actionLink);
+	}
+
+	@Override
+	public Optional<ClientActionLink> getActionLink(ClientAction action) {
+		return (Optional<ClientActionLink>) MCR.addCallAndReturnFromMRV();
+	}
 }

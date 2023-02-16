@@ -24,12 +24,14 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import se.uu.ub.cora.clientdata.ClientAction;
+import se.uu.ub.cora.clientdata.ClientActionLink;
 import se.uu.ub.cora.clientdata.ClientDataAttribute;
 import se.uu.ub.cora.testutils.mcr.MethodCallRecorder;
 import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
@@ -57,12 +59,33 @@ public class ClientDataRecordLinkSpyTest {
 	}
 
 	@Test
-	public void testAddAction() throws Exception {
+	public void testAddActionLink() throws Exception {
 		dataRecordLink.MCR = MCRSpy;
+		ClientActionLink actionLink = new ClientActionLinkSpy();
 
-		dataRecordLink.addAction(ClientAction.CREATE);
+		dataRecordLink.addActionLink(actionLink);
 
-		mcrForSpy.assertParameter(ADD_CALL, 0, "action", ClientAction.CREATE);
+		mcrForSpy.assertParameter(ADD_CALL, 0, "actionLink", actionLink);
+	}
+
+	@Test
+	public void testDefaulGetActionLink() throws Exception {
+		Optional<ClientActionLink> actionLink = dataRecordLink.getActionLink(ClientAction.READ);
+		assertTrue(actionLink.isEmpty());
+	}
+
+	@Test
+	public void testGetActionLink() throws Exception {
+		dataRecordLink.MCR = MCRSpy;
+		ClientActionLink actionLink = new ClientActionLinkSpy();
+		Optional<ClientActionLink> actionLinkOp = Optional.of(actionLink);
+
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, () -> actionLinkOp);
+
+		Optional<ClientActionLink> retunedValue = dataRecordLink.getActionLink(ClientAction.READ);
+
+		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, retunedValue);
 	}
 
 	@Test
