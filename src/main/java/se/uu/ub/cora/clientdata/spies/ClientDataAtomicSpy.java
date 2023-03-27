@@ -20,6 +20,7 @@ package se.uu.ub.cora.clientdata.spies;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import se.uu.ub.cora.clientdata.ClientDataAtomic;
@@ -40,6 +41,7 @@ public class ClientDataAtomicSpy implements ClientDataAtomic {
 		MRV.setDefaultReturnValuesSupplier("getAttributes", ArrayList<ClientDataAttribute>::new);
 		MRV.setDefaultReturnValuesSupplier("getNameInData", String::new);
 		MRV.setDefaultReturnValuesSupplier("getValue", String::new);
+		MRV.setDefaultReturnValuesSupplier("getAttributeValue", Optional::empty);
 	}
 
 	@Override
@@ -80,5 +82,10 @@ public class ClientDataAtomicSpy implements ClientDataAtomic {
 	@Override
 	public String getValue() {
 		return (String) MCR.addCallAndReturnFromMRV();
+	}
+
+	@Override
+	public Optional<String> getAttributeValue(String nameInData) {
+		return (Optional<String>) MCR.addCallAndReturnFromMRV("nameInData", nameInData);
 	}
 }

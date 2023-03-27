@@ -48,6 +48,7 @@ public class ClientDataResourceLinkSpy implements ClientDataResourceLink {
 		MRV.setDefaultReturnValuesSupplier("getFileSize", String::new);
 		MRV.setDefaultReturnValuesSupplier("getMimeType", String::new);
 		MRV.setDefaultReturnValuesSupplier("getActionLink", Optional::empty);
+		MRV.setDefaultReturnValuesSupplier("getAttributeValue", Optional::empty);
 	}
 
 	@Override
@@ -138,5 +139,10 @@ public class ClientDataResourceLinkSpy implements ClientDataResourceLink {
 	@Override
 	public Optional<ClientActionLink> getActionLink(ClientAction action) {
 		return (Optional<ClientActionLink>) MCR.addCallAndReturnFromMRV();
+	}
+
+	@Override
+	public Optional<String> getAttributeValue(String nameInData) {
+		return (Optional<String>) MCR.addCallAndReturnFromMRV("nameInData", nameInData);
 	}
 }

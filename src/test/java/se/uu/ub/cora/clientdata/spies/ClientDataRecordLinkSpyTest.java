@@ -18,6 +18,7 @@
  */
 package se.uu.ub.cora.clientdata.spies;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
@@ -240,4 +241,24 @@ public class ClientDataRecordLinkSpyTest {
 		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
 	}
 
+	@Test
+	public void testDefaultGetAttributeValue() throws Exception {
+
+		Optional<String> returnedValue = dataRecordLink.getAttributeValue("someNameInData");
+
+		assertTrue(returnedValue.isEmpty());
+	}
+
+	@Test
+	public void testGetAttributeValue() throws Exception {
+		dataRecordLink.MCR = MCRSpy;
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
+				() -> Optional.of("someValueToReturn"));
+
+		Optional<String> returnedValue = dataRecordLink.getAttributeValue("someNameInData");
+
+		assertTrue(returnedValue.isPresent());
+		assertEquals(returnedValue.get(), "someValueToReturn");
+		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "nameInData", "someNameInData");
+	}
 }

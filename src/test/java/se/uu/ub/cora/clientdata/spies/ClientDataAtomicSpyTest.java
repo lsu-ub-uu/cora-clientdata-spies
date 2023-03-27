@@ -18,12 +18,14 @@
  */
 package se.uu.ub.cora.clientdata.spies;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.testng.annotations.BeforeMethod;
@@ -171,5 +173,26 @@ public class ClientDataAtomicSpyTest {
 
 		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
 		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
+	}
+
+	@Test
+	public void testDefaultGetAttributeValue() throws Exception {
+
+		Optional<String> returnedValue = dataAtomic.getAttributeValue("someNameInData");
+
+		assertTrue(returnedValue.isEmpty());
+	}
+
+	@Test
+	public void testGetAttributeValue() throws Exception {
+		dataAtomic.MCR = MCRSpy;
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
+				() -> Optional.of("someValueToReturn"));
+
+		Optional<String> returnedValue = dataAtomic.getAttributeValue("someNameInData");
+
+		assertTrue(returnedValue.isPresent());
+		assertEquals(returnedValue.get(), "someValueToReturn");
+		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "nameInData", "someNameInData");
 	}
 }

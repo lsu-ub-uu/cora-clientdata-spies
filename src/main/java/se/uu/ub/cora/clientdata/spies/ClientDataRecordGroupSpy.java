@@ -21,6 +21,7 @@ package se.uu.ub.cora.clientdata.spies;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import se.uu.ub.cora.clientdata.ClientDataAtomic;
@@ -78,6 +79,14 @@ public class ClientDataRecordGroupSpy implements ClientDataRecordGroup {
 		MRV.setDefaultReturnValuesSupplier("getType", String::new);
 		MRV.setDefaultReturnValuesSupplier("getId", String::new);
 		MRV.setDefaultReturnValuesSupplier("getDataDivider", String::new);
+
+		MRV.setDefaultReturnValuesSupplier("containsChildOfTypeAndName", () -> false);
+		MRV.setDefaultReturnValuesSupplier("getFirstChildOfTypeAndName", ClientDataChildSpy::new);
+		MRV.setDefaultReturnValuesSupplier("getChildrenOfTypeAndName",
+				ArrayList<ClientDataChildSpy>::new);
+		MRV.setDefaultReturnValuesSupplier("removeFirstChildWithTypeAndName", () -> false);
+		MRV.setDefaultReturnValuesSupplier("removeChildrenWithTypeAndName", () -> false);
+		MRV.setDefaultReturnValuesSupplier("getAttributeValue", Optional::empty);
 	}
 
 	@Override
@@ -250,6 +259,39 @@ public class ClientDataRecordGroupSpy implements ClientDataRecordGroup {
 	@Override
 	public void setDataDivider(String dataDivider) {
 		MCR.addCall("dataDivider", dataDivider);
+	}
+
+	@Override
+	public <T> boolean containsChildOfTypeAndName(Class<T> type, String name) {
+		return (boolean) MCR.addCallAndReturnFromMRV("type", type, "name", name);
+	}
+
+	@Override
+	public <T extends ClientDataChild> T getFirstChildOfTypeAndName(Class<T> type, String name) {
+		return (T) MCR.addCallAndReturnFromMRV("type", type, "name", name);
+	}
+
+	@Override
+	public <T extends ClientDataChild> List<T> getChildrenOfTypeAndName(Class<T> type,
+			String name) {
+		return (List<T>) MCR.addCallAndReturnFromMRV("type", type, "name", name);
+	}
+
+	@Override
+	public <T extends ClientDataChild> boolean removeFirstChildWithTypeAndName(Class<T> type,
+			String name) {
+		return (boolean) MCR.addCallAndReturnFromMRV("type", type, "name", name);
+	}
+
+	@Override
+	public <T extends ClientDataChild> boolean removeChildrenWithTypeAndName(Class<T> type,
+			String name) {
+		return (boolean) MCR.addCallAndReturnFromMRV("type", type, "name", name);
+	}
+
+	@Override
+	public Optional<String> getAttributeValue(String nameInData) {
+		return (Optional<String>) MCR.addCallAndReturnFromMRV("nameInData", nameInData);
 	}
 
 }

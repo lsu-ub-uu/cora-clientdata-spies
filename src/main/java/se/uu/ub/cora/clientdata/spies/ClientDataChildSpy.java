@@ -20,6 +20,7 @@ package se.uu.ub.cora.clientdata.spies;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import se.uu.ub.cora.clientdata.ClientDataAttribute;
@@ -42,6 +43,8 @@ public class ClientDataChildSpy implements ClientDataChild {
 		// MRV.setDefaultReturnValuesSupplier("hasReadAction", (Supplier<Boolean>) () -> false);
 		// MRV.setDefaultReturnValuesSupplier("getLinkedRecordId", String::new);
 		// MRV.setDefaultReturnValuesSupplier("getLinkedRecordType", String::new);
+
+		MRV.setDefaultReturnValuesSupplier("getAttributeValue", Optional::empty);
 	}
 
 	@Override
@@ -77,5 +80,10 @@ public class ClientDataChildSpy implements ClientDataChild {
 	@Override
 	public Collection<ClientDataAttribute> getAttributes() {
 		return (Collection<ClientDataAttribute>) MCR.addCallAndReturnFromMRV();
+	}
+
+	@Override
+	public Optional<String> getAttributeValue(String nameInData) {
+		return (Optional<String>) MCR.addCallAndReturnFromMRV("nameInData", nameInData);
 	}
 }
