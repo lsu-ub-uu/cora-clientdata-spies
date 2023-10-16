@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Olov McKie
+ * Copyright 2022, 2023 Olov McKie
  *
  * This file is part of Cora.
  *
@@ -18,6 +18,8 @@
  */
 package se.uu.ub.cora.clientdata.spies;
 
+import se.uu.ub.cora.clientdata.ClientAction;
+import se.uu.ub.cora.clientdata.ClientActionLink;
 import se.uu.ub.cora.clientdata.ClientDataAtomic;
 import se.uu.ub.cora.clientdata.ClientDataAttribute;
 import se.uu.ub.cora.clientdata.ClientDataChildFilter;
@@ -61,6 +63,7 @@ public class ClientDataFactorySpy implements ClientDataFactory {
 				ClientDataAtomicSpy::new);
 		MRV.setDefaultReturnValuesSupplier("factorAttributeUsingNameInDataAndValue",
 				ClientDataAttributeSpy::new);
+		MRV.setDefaultReturnValuesSupplier("factorActionLinkUsingAction", ClientActionLinkSpy::new);
 		MRV.setDefaultReturnValuesSupplier("factorDataChildFilterUsingNameInData",
 				ClientDataChildFilterSpy::new);
 	}
@@ -131,6 +134,11 @@ public class ClientDataFactorySpy implements ClientDataFactory {
 			String value) {
 		return (ClientDataAttribute) MCR.addCallAndReturnFromMRV("nameInData", nameInData, "value",
 				value);
+	}
+
+	@Override
+	public ClientActionLink factorActionLinkUsingAction(ClientAction clientAction) {
+		return (ClientActionLink) MCR.addCallAndReturnFromMRV("clientAction", clientAction);
 	}
 
 	@Override
