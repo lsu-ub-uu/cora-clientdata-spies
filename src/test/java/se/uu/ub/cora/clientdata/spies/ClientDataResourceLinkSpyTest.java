@@ -210,81 +210,6 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testSetStreamId() throws Exception {
-		dataResourceLink.MCR = MCRSpy;
-
-		dataResourceLink.setStreamId("stream1");
-
-		mcrForSpy.assertParameter(ADD_CALL, 0, "streamId", "stream1");
-	}
-
-	@Test
-	public void testDefaultGetStreamId() throws Exception {
-		assertTrue(dataResourceLink.getStreamId() instanceof String);
-	}
-
-	@Test
-	public void testGetStreamId() throws Exception {
-		dataResourceLink.MCR = MCRSpy;
-		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
-
-		String returnedValue = dataResourceLink.getStreamId();
-
-		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
-		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
-	}
-
-	@Test
-	public void testSetFileName() throws Exception {
-		dataResourceLink.MCR = MCRSpy;
-
-		dataResourceLink.setFileName("fileName1");
-
-		mcrForSpy.assertParameter(ADD_CALL, 0, "fileName", "fileName1");
-	}
-
-	@Test
-	public void testDefaultGetFileName() throws Exception {
-		assertTrue(dataResourceLink.getFileName() instanceof String);
-	}
-
-	@Test
-	public void testGetFileName() throws Exception {
-		dataResourceLink.MCR = MCRSpy;
-		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
-
-		String returnedValue = dataResourceLink.getFileName();
-
-		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
-		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
-	}
-
-	@Test
-	public void testSetFileSize() throws Exception {
-		dataResourceLink.MCR = MCRSpy;
-
-		dataResourceLink.setFileSize("1234");
-
-		mcrForSpy.assertParameter(ADD_CALL, 0, "fileSize", "1234");
-	}
-
-	@Test
-	public void testDefaultGetFileSize() throws Exception {
-		assertTrue(dataResourceLink.getFileSize() instanceof String);
-	}
-
-	@Test
-	public void testGetFileSize() throws Exception {
-		dataResourceLink.MCR = MCRSpy;
-		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
-
-		String returnedValue = dataResourceLink.getFileSize();
-
-		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
-		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
-	}
-
-	@Test
 	public void testSetMimeType() throws Exception {
 		dataResourceLink.MCR = MCRSpy;
 
@@ -328,5 +253,21 @@ public class ClientDataResourceLinkSpyTest {
 		assertTrue(returnedValue.isPresent());
 		assertEquals(returnedValue.get(), "someValueToReturn");
 		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "nameInData", "someNameInData");
+	}
+
+	@Test
+	public void testDefaultHasRepeatId() throws Exception {
+		assertFalse(dataResourceLink.hasRepeatId());
+	}
+
+	@Test
+	public void testHasRepeatId() throws Exception {
+		dataResourceLink.MCR = MCRSpy;
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, () -> true);
+
+		boolean returnedValue = dataResourceLink.hasRepeatId();
+
+		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
 	}
 }

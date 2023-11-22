@@ -82,6 +82,7 @@ public class ClientDataGroupSpy implements ClientDataGroup {
 		MRV.setDefaultReturnValuesSupplier("removeFirstChildWithTypeAndName", () -> false);
 		MRV.setDefaultReturnValuesSupplier("removeChildrenWithTypeAndName", () -> false);
 		MRV.setDefaultReturnValuesSupplier("getAttributeValue", Optional::empty);
+		MRV.setDefaultReturnValuesSupplier("hasRepeatId", () -> false);
 	}
 
 	@Override
@@ -260,6 +261,11 @@ public class ClientDataGroupSpy implements ClientDataGroup {
 			String name) {
 		// TODO Auto-generated method stub
 		return (boolean) MCR.addCallAndReturnFromMRV("type", type, "name", name);
+	}
+
+	@Override
+	public boolean hasRepeatId() {
+		return (boolean) MCR.addCallAndReturnFromMRV();
 	}
 
 }

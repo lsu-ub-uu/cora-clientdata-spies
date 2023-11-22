@@ -692,4 +692,20 @@ public class ClientDataGroupSpyTest {
 		assertEquals(returnedValue.get(), "someValueToReturn");
 		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "nameInData", "someNameInData");
 	}
+
+	@Test
+	public void testDefaultHasRepeatId() throws Exception {
+		assertFalse(dataGroup.hasRepeatId());
+	}
+
+	@Test
+	public void testHasRepeatId() throws Exception {
+		dataGroup.MCR = MCRSpy;
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, () -> true);
+
+		boolean returnedValue = dataGroup.hasRepeatId();
+
+		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
+	}
 }

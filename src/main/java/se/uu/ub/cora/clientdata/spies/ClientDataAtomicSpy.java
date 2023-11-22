@@ -42,6 +42,7 @@ public class ClientDataAtomicSpy implements ClientDataAtomic {
 		MRV.setDefaultReturnValuesSupplier("getNameInData", String::new);
 		MRV.setDefaultReturnValuesSupplier("getValue", String::new);
 		MRV.setDefaultReturnValuesSupplier("getAttributeValue", Optional::empty);
+		MRV.setDefaultReturnValuesSupplier("hasRepeatId", () -> false);
 	}
 
 	@Override
@@ -87,5 +88,10 @@ public class ClientDataAtomicSpy implements ClientDataAtomic {
 	@Override
 	public Optional<String> getAttributeValue(String nameInData) {
 		return (Optional<String>) MCR.addCallAndReturnFromMRV("nameInData", nameInData);
+	}
+
+	@Override
+	public boolean hasRepeatId() {
+		return (boolean) MCR.addCallAndReturnFromMRV();
 	}
 }

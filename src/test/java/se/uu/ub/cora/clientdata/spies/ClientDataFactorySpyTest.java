@@ -229,8 +229,8 @@ public class ClientDataFactorySpyTest {
 
 	@Test
 	public void testDefaultFactorResourceLinkUsingNameInData() throws Exception {
-		assertTrue(dataFactory.factorResourceLinkUsingNameInData(
-				"nameInData") instanceof ClientDataResourceLinkSpy);
+		assertTrue(dataFactory.factorResourceLinkUsingNameInDataAndMimeType("nameInData",
+				"mimeType") instanceof ClientDataResourceLinkSpy);
 	}
 
 	@Test
@@ -240,10 +240,11 @@ public class ClientDataFactorySpyTest {
 				ClientDataResourceLinkSpy::new);
 
 		ClientDataResourceLink retunedValue = dataFactory
-				.factorResourceLinkUsingNameInData("nameInData");
+				.factorResourceLinkUsingNameInDataAndMimeType("nameInData", "mimeType");
 
 		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
 		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "nameInData", "nameInData");
+		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "mimeType", "mimeType");
 		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, retunedValue);
 	}
 

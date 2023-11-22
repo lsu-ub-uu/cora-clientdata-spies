@@ -49,6 +49,7 @@ public class ClientDataResourceLinkSpy implements ClientDataResourceLink {
 		MRV.setDefaultReturnValuesSupplier("getMimeType", String::new);
 		MRV.setDefaultReturnValuesSupplier("getActionLink", Optional::empty);
 		MRV.setDefaultReturnValuesSupplier("getAttributeValue", Optional::empty);
+		MRV.setDefaultReturnValuesSupplier("hasRepeatId", () -> false);
 	}
 
 	@Override
@@ -92,36 +93,6 @@ public class ClientDataResourceLinkSpy implements ClientDataResourceLink {
 	}
 
 	@Override
-	public void setStreamId(String streamId) {
-		MCR.addCall("streamId", streamId);
-	}
-
-	@Override
-	public String getStreamId() {
-		return (String) MCR.addCallAndReturnFromMRV();
-	}
-
-	@Override
-	public void setFileName(String fileName) {
-		MCR.addCall("fileName", fileName);
-	}
-
-	@Override
-	public String getFileName() {
-		return (String) MCR.addCallAndReturnFromMRV();
-	}
-
-	@Override
-	public void setFileSize(String fileSize) {
-		MCR.addCall("fileSize", fileSize);
-	}
-
-	@Override
-	public String getFileSize() {
-		return (String) MCR.addCallAndReturnFromMRV();
-	}
-
-	@Override
 	public void setMimeType(String mimeType) {
 		MCR.addCall("mimeType", mimeType);
 	}
@@ -144,5 +115,10 @@ public class ClientDataResourceLinkSpy implements ClientDataResourceLink {
 	@Override
 	public Optional<String> getAttributeValue(String nameInData) {
 		return (Optional<String>) MCR.addCallAndReturnFromMRV("nameInData", nameInData);
+	}
+
+	@Override
+	public boolean hasRepeatId() {
+		return (boolean) MCR.addCallAndReturnFromMRV();
 	}
 }

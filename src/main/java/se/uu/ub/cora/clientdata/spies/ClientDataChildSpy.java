@@ -1,5 +1,6 @@
 /*
  * Copyright 2022 Olov McKie
+ * Copyright 2023 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -40,11 +41,8 @@ public class ClientDataChildSpy implements ClientDataChild {
 		MRV.setDefaultReturnValuesSupplier("hasAttributes", (Supplier<Boolean>) () -> false);
 		MRV.setDefaultReturnValuesSupplier("getAttribute", ClientDataAttributeSpy::new);
 		MRV.setDefaultReturnValuesSupplier("getAttributes", ArrayList<ClientDataAttribute>::new);
-		// MRV.setDefaultReturnValuesSupplier("hasReadAction", (Supplier<Boolean>) () -> false);
-		// MRV.setDefaultReturnValuesSupplier("getLinkedRecordId", String::new);
-		// MRV.setDefaultReturnValuesSupplier("getLinkedRecordType", String::new);
-
 		MRV.setDefaultReturnValuesSupplier("getAttributeValue", Optional::empty);
+		MRV.setDefaultReturnValuesSupplier("hasRepeatId", () -> false);
 	}
 
 	@Override
@@ -85,5 +83,10 @@ public class ClientDataChildSpy implements ClientDataChild {
 	@Override
 	public Optional<String> getAttributeValue(String nameInData) {
 		return (Optional<String>) MCR.addCallAndReturnFromMRV("nameInData", nameInData);
+	}
+
+	@Override
+	public boolean hasRepeatId() {
+		return (boolean) MCR.addCallAndReturnFromMRV();
 	}
 }

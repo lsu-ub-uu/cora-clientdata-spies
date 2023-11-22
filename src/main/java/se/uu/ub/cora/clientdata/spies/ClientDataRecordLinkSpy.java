@@ -46,6 +46,7 @@ public class ClientDataRecordLinkSpy implements ClientDataRecordLink {
 		MRV.setDefaultReturnValuesSupplier("getLinkedRecordType", String::new);
 		MRV.setDefaultReturnValuesSupplier("getActionLink", Optional::empty);
 		MRV.setDefaultReturnValuesSupplier("getAttributeValue", Optional::empty);
+		MRV.setDefaultReturnValuesSupplier("hasRepeatId", () -> false);
 	}
 
 	@Override
@@ -111,5 +112,10 @@ public class ClientDataRecordLinkSpy implements ClientDataRecordLink {
 	@Override
 	public Optional<String> getAttributeValue(String nameInData) {
 		return (Optional<String>) MCR.addCallAndReturnFromMRV("nameInData", nameInData);
+	}
+
+	@Override
+	public boolean hasRepeatId() {
+		return (boolean) MCR.addCallAndReturnFromMRV();
 	}
 }
