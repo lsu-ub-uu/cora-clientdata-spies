@@ -20,9 +20,9 @@ package se.uu.ub.cora.clientdata.spies;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import se.uu.ub.cora.clientdata.ClientAction;
 import se.uu.ub.cora.clientdata.ClientActionLink;
@@ -42,11 +42,13 @@ public class ClientDataRecordSpy implements ClientDataRecord {
 		MRV.setDefaultReturnValuesSupplier("getId", String::new);
 		MRV.setDefaultReturnValuesSupplier("getDataRecordGroup", ClientDataRecordGroupSpy::new);
 		MRV.setDefaultReturnValuesSupplier("getActionLink", Optional::empty);
-		MRV.setDefaultReturnValuesSupplier("hasReadPermissions", (Supplier<Boolean>) () -> false);
+		MRV.setDefaultReturnValuesSupplier("hasReadPermissions", () -> false);
 		MRV.setDefaultReturnValuesSupplier("getReadPermissions", Collections::emptySet);
-		MRV.setDefaultReturnValuesSupplier("hasWritePermissions", (Supplier<Boolean>) () -> false);
+		MRV.setDefaultReturnValuesSupplier("hasWritePermissions", () -> false);
 		MRV.setDefaultReturnValuesSupplier("getWritePermissions", Collections::emptySet);
 		MRV.setDefaultReturnValuesSupplier("getSearchId", String::new);
+		MRV.setDefaultReturnValuesSupplier("hasProtocol", () -> false);
+		MRV.setDefaultReturnValuesSupplier("getProtocol", Collections::emptyMap);
 	}
 
 	@Override
@@ -125,6 +127,21 @@ public class ClientDataRecordSpy implements ClientDataRecord {
 	@Override
 	public String getSearchId() {
 		return (String) MCR.addCallAndReturnFromMRV();
+	}
+
+	@Override
+	public boolean hasProtocol(String protocol) {
+		return (boolean) MCR.addCallAndReturnFromMRV("protocol", protocol);
+	}
+
+	@Override
+	public void putProtocol(String protocol, Map<String, String> protocolProperties) {
+		MCR.addCall("protocol", protocol, "protocolProperties", protocolProperties);
+	}
+
+	@Override
+	public Map<String, String> getProtocol(String protocol) {
+		return (Map<String, String>) MCR.addCallAndReturnFromMRV("protocol", protocol);
 	}
 
 }

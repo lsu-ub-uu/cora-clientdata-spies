@@ -18,11 +18,15 @@
  */
 package se.uu.ub.cora.clientdata.spies;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -269,6 +273,55 @@ public class ClientDataRecordSpyTest {
 		String returnedValue = dataRecord.getSearchId();
 
 		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
+	}
+
+	@Test
+	public void testDefaultHasProtocol() throws Exception {
+		assertFalse(dataRecord.hasProtocol("aProtocol"));
+	}
+
+	@Test
+	public void testHasProtocol() throws Exception {
+		dataRecord.MCR = MCRSpy;
+
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, () -> true);
+
+		boolean returnedValue = dataRecord.hasProtocol("someProtocol");
+
+		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertParameters(ADD_CALL_AND_RETURN_FROM_MRV, 0, "someProtocol");
+		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
+	}
+
+	@Test
+	public void testPutProtocol() throws Exception {
+		dataRecord.MCR = MCRSpy;
+
+		Map<String, String> protocolProperties = Collections.emptyMap();
+
+		dataRecord.putProtocol("someProtocol", protocolProperties);
+
+		mcrForSpy.assertMethodWasCalled(ADD_CALL);
+		mcrForSpy.assertParameters(ADD_CALL, 0, "someProtocol", protocolProperties);
+	}
+
+	@Test
+	public void testDefaultGetProtocol() throws Exception {
+		assertEquals(dataRecord.getProtocol("nonExistingProtocol"), Collections.emptyMap());
+	}
+
+	@Test
+	public void testName() throws Exception {
+		dataRecord.MCR = MCRSpy;
+
+		Map<String, String> properties = new HashMap<>();
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, () -> properties);
+
+		var returnedValue = dataRecord.getProtocol("someProtocol");
+
+		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertParameters(ADD_CALL_AND_RETURN_FROM_MRV, 0, "someProtocol");
 		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
 	}
 }
