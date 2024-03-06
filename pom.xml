@@ -13,7 +13,7 @@
 	<name>Client data-spies</name>
 
 	<properties>
-		<clientdata.version>6.4-SNAPSHOT</clientdata.version>
+		<clientdata.version>6.4.0</clientdata.version>
 		<json.version>3.9.0</json.version>
 		<testutils.version>1.11.0</testutils.version>
 		<testutils-spies.version>1.5.0</testutils-spies.version>
