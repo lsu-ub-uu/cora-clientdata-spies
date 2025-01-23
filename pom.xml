@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>se.uu.ub.cora</groupId>
 		<artifactId>cora-parent</artifactId>
-		<version>2.5.0</version>
+		<version>2.7.0</version>
 	</parent>
 
 	<artifactId>clientdata-spies</artifactId>
@@ -13,9 +13,9 @@
 	<name>Client data-spies</name>
 
 	<properties>
-		<clientdata.version>6.5.0</clientdata.version>
+		<clientdata.version>6.6-SNAPSHOT</clientdata.version>
 		<json.version>3.10.0</json.version>
-		<testutils.version>1.11.0</testutils.version>
+		<testutils.version>1.14.0</testutils.version>
 		<testutils-spies.version>1.5.0</testutils-spies.version>
 	</properties>
 
