@@ -185,6 +185,7 @@ public class ClientDataAuthenticationSpyTest {
 		var returnedValue = dataAuthentication.getActionLink(ClientAction.CREATE);
 
 		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertParameters("addCallAndReturnFromMRV", 0, ClientAction.CREATE);
 		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
 	}
 }

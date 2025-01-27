@@ -80,6 +80,6 @@ public class ClientDataAuthenticationSpy implements ClientDataAuthentication {
 
 	@Override
 	public Optional<ClientActionLink> getActionLink(ClientAction action) {
-		return (Optional<ClientActionLink>) MCR.addCallAndReturnFromMRV();
+		return (Optional<ClientActionLink>) MCR.addCallAndReturnFromMRV("action", action);
 	}
 }
