@@ -18,6 +18,8 @@
  */
 package se.uu.ub.cora.clientdata.spies;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import se.uu.ub.cora.clientdata.ClientAction;
@@ -41,6 +43,7 @@ public class ClientDataAuthenticationSpy implements ClientDataAuthentication {
 		MRV.setDefaultReturnValuesSupplier("getFirstName", () -> "someFirstName");
 		MRV.setDefaultReturnValuesSupplier("getLastName", () -> "someLastName");
 		MRV.setDefaultReturnValuesSupplier("getActionLink", Optional::empty);
+		MRV.setDefaultReturnValuesSupplier("getPermissionUnitIds", Collections::emptyList);
 	}
 
 	@Override
@@ -81,5 +84,10 @@ public class ClientDataAuthenticationSpy implements ClientDataAuthentication {
 	@Override
 	public Optional<ClientActionLink> getActionLink(ClientAction action) {
 		return (Optional<ClientActionLink>) MCR.addCallAndReturnFromMRV("action", action);
+	}
+
+	@Override
+	public List<String> getPermissionUnitIds() {
+		return (List<String>) MCR.addCallAndReturnFromMRV();
 	}
 }

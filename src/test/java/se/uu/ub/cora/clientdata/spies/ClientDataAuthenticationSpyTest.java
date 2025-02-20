@@ -23,6 +23,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.testng.annotations.BeforeMethod;
@@ -188,4 +189,22 @@ public class ClientDataAuthenticationSpyTest {
 		mcrForSpy.assertParameters("addCallAndReturnFromMRV", 0, ClientAction.CREATE);
 		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
 	}
+
+	@Test
+	public void testGetDefaultPermissionUnitIds() {
+		assertEquals(dataAuthentication.getPermissionUnitIds().size(), 0);
+	}
+
+	@Test
+	public void testGetPermissionUnitIds() {
+		dataAuthentication.MCR = MCRSpy;
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
+				() -> List.of("unitId"));
+
+		var returnedValue = dataAuthentication.getPermissionUnitIds();
+
+		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
+	}
+
 }
