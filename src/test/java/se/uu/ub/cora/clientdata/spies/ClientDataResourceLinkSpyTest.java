@@ -53,14 +53,14 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testMakeSureSpyHelpersAreSetUp() throws Exception {
+	public void testMakeSureSpyHelpersAreSetUp() {
 		assertTrue(dataResourceLink.MCR instanceof MethodCallRecorder);
 		assertTrue(dataResourceLink.MRV instanceof MethodReturnValues);
 		assertSame(dataResourceLink.MCR.onlyForTestGetMRV(), dataResourceLink.MRV);
 	}
 
 	@Test
-	public void testAddActionLink() throws Exception {
+	public void testAddActionLink() {
 		dataResourceLink.MCR = MCRSpy;
 		ClientActionLink actionLink = new ClientActionLinkSpy();
 
@@ -70,12 +70,12 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testDefaultHasReadAction() throws Exception {
+	public void testDefaultHasReadAction() {
 		assertFalse(dataResourceLink.hasReadAction());
 	}
 
 	@Test
-	public void testHasReadAction() throws Exception {
+	public void testHasReadAction() {
 		dataResourceLink.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				(Supplier<Boolean>) () -> true);
@@ -87,13 +87,13 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testDefaulGetActionLink() throws Exception {
+	public void testDefaulGetActionLink() {
 		Optional<ClientActionLink> actionLink = dataResourceLink.getActionLink(ClientAction.READ);
 		assertTrue(actionLink.isEmpty());
 	}
 
 	@Test
-	public void testGetActionLink() throws Exception {
+	public void testGetActionLink() {
 		dataResourceLink.MCR = MCRSpy;
 		ClientActionLink actionLink = new ClientActionLinkSpy();
 		Optional<ClientActionLink> actionLinkOp = Optional.of(actionLink);
@@ -107,7 +107,7 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testSetRepeatId() throws Exception {
+	public void testSetRepeatId() {
 		dataResourceLink.MCR = MCRSpy;
 
 		dataResourceLink.setRepeatId("repeat1");
@@ -116,12 +116,12 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testDefaultGetRepeatId() throws Exception {
+	public void testDefaultGetRepeatId() {
 		assertTrue(dataResourceLink.getRepeatId() instanceof String);
 	}
 
 	@Test
-	public void testGetRepeatId() throws Exception {
+	public void testGetRepeatId() {
 		dataResourceLink.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
 
@@ -132,12 +132,12 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testDefaultGetNameInData() throws Exception {
+	public void testDefaultGetNameInData() {
 		assertTrue(dataResourceLink.getNameInData() instanceof String);
 	}
 
 	@Test
-	public void testGetNameInData() throws Exception {
+	public void testGetNameInData() {
 		dataResourceLink.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
 
@@ -148,7 +148,7 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testAddAttributeByIdWithValue() throws Exception {
+	public void testAddAttributeByIdWithValue() {
 		dataResourceLink.MCR = MCRSpy;
 
 		dataResourceLink.addAttributeByIdWithValue("attribId", "attribValue");
@@ -158,12 +158,12 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testDefaultHasAttributes() throws Exception {
+	public void testDefaultHasAttributes() {
 		assertFalse(dataResourceLink.hasAttributes());
 	}
 
 	@Test
-	public void testHasAttributes() throws Exception {
+	public void testHasAttributes() {
 		dataResourceLink.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				(Supplier<Boolean>) () -> true);
@@ -175,12 +175,12 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testDefaultGetAttribute() throws Exception {
+	public void testDefaultGetAttribute() {
 		assertTrue(dataResourceLink.getAttribute("nameInData") instanceof ClientDataAttribute);
 	}
 
 	@Test
-	public void testGetAttribute() throws Exception {
+	public void testGetAttribute() {
 		dataResourceLink.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataAttributeSpy::new);
@@ -193,12 +193,12 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testDefaultGetAttributes() throws Exception {
+	public void testDefaultGetAttributes() {
 		assertTrue(dataResourceLink.getAttributes() instanceof Collection<ClientDataAttribute>);
 	}
 
 	@Test
-	public void testGetAttributes() throws Exception {
+	public void testGetAttributes() {
 		dataResourceLink.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ArrayList<ClientDataAttribute>::new);
@@ -210,7 +210,39 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testSetMimeType() throws Exception {
+	public void testDefaultGetType() {
+		assertTrue(dataResourceLink.getType() instanceof String);
+	}
+
+	@Test
+	public void testGetType() {
+		dataResourceLink.MCR = MCRSpy;
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
+
+		String returnedValue = dataResourceLink.getType();
+
+		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
+	}
+
+	@Test
+	public void testDefaultGetId() {
+		assertTrue(dataResourceLink.getId() instanceof String);
+	}
+
+	@Test
+	public void testGetId() {
+		dataResourceLink.MCR = MCRSpy;
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
+
+		String returnedValue = dataResourceLink.getId();
+
+		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
+	}
+
+	@Test
+	public void testSetMimeType() {
 		dataResourceLink.MCR = MCRSpy;
 
 		dataResourceLink.setMimeType("someMime");
@@ -219,12 +251,12 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testDefaultGetMimeType() throws Exception {
+	public void testDefaultGetMimeType() {
 		assertTrue(dataResourceLink.getMimeType() instanceof String);
 	}
 
 	@Test
-	public void testGetMimeType() throws Exception {
+	public void testGetMimeType() {
 		dataResourceLink.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
 
@@ -235,7 +267,7 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testDefaultGetAttributeValue() throws Exception {
+	public void testDefaultGetAttributeValue() {
 
 		Optional<String> returnedValue = dataResourceLink.getAttributeValue("someNameInData");
 
@@ -243,7 +275,7 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testGetAttributeValue() throws Exception {
+	public void testGetAttributeValue() {
 		dataResourceLink.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				() -> Optional.of("someValueToReturn"));
@@ -256,12 +288,12 @@ public class ClientDataResourceLinkSpyTest {
 	}
 
 	@Test
-	public void testDefaultHasRepeatId() throws Exception {
+	public void testDefaultHasRepeatId() {
 		assertFalse(dataResourceLink.hasRepeatId());
 	}
 
 	@Test
-	public void testHasRepeatId() throws Exception {
+	public void testHasRepeatId() {
 		dataResourceLink.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, () -> true);
 
