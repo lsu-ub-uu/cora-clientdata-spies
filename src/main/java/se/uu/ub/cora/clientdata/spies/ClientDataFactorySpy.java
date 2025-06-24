@@ -55,7 +55,8 @@ public class ClientDataFactorySpy implements ClientDataFactory {
 				ClientDataRecordLinkSpy::new);
 		MRV.setDefaultReturnValuesSupplier("factorRecordLinkUsingNameInDataAndTypeAndId",
 				ClientDataRecordLinkSpy::new);
-		MRV.setDefaultReturnValuesSupplier("factorResourceLinkUsingNameInDataAndMimeType",
+		MRV.setDefaultReturnValuesSupplier(
+				"factorResourceLinkUsingNameInDataAndTypeAndIdAndMimeType",
 				ClientDataResourceLinkSpy::new);
 		MRV.setDefaultReturnValuesSupplier("factorAtomicUsingNameInDataAndValue",
 				ClientDataAtomicSpy::new);
@@ -112,10 +113,10 @@ public class ClientDataFactorySpy implements ClientDataFactory {
 	}
 
 	@Override
-	public ClientDataResourceLink factorResourceLinkUsingNameInDataAndMimeType(String nameInData,
-			String mimeType) {
+	public ClientDataResourceLink factorResourceLinkUsingNameInDataAndTypeAndIdAndMimeType(
+			String nameInData, String recordType, String recordId, String mimeType) {
 		return (ClientDataResourceLink) MCR.addCallAndReturnFromMRV("nameInData", nameInData,
-				"mimeType", mimeType);
+				"recordType", recordType, "recordId", recordId, "mimeType", mimeType);
 	}
 
 	@Override

@@ -54,20 +54,20 @@ public class ClientDataFactorySpyTest {
 	}
 
 	@Test
-	public void testMakeSureSpyHelpersAreSetUp() throws Exception {
+	public void testMakeSureSpyHelpersAreSetUp() {
 		assertTrue(dataFactory.MCR instanceof MethodCallRecorder);
 		assertTrue(dataFactory.MRV instanceof MethodReturnValues);
 		assertSame(dataFactory.MCR.onlyForTestGetMRV(), dataFactory.MRV);
 	}
 
 	@Test
-	public void testDefaultFactorListUsingNameOfDataType() throws Exception {
+	public void testDefaultFactorListUsingNameOfDataType() {
 		assertTrue(dataFactory
 				.factorListUsingNameOfDataType("nameOfDataType") instanceof ClientDataListSpy);
 	}
 
 	@Test
-	public void testFactorListUsingNameOfDataType() throws Exception {
+	public void testFactorListUsingNameOfDataType() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataListSpy::new);
@@ -81,14 +81,14 @@ public class ClientDataFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorRecordUsingDataGroup() throws Exception {
+	public void testDefaultFactorRecordUsingDataGroup() {
 		ClientDataRecordGroup dataRecordGroupSpy = new ClientDataRecordGroupSpy();
 		assertTrue(dataFactory.factorRecordUsingDataRecordGroup(
 				dataRecordGroupSpy) instanceof ClientDataRecordSpy);
 	}
 
 	@Test
-	public void testFactorRecordUsingDataGroup() throws Exception {
+	public void testFactorRecordUsingDataGroup() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataRecordSpy::new);
@@ -102,13 +102,13 @@ public class ClientDataFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorRecordGroupUsingNameInData() throws Exception {
+	public void testDefaultFactorRecordGroupUsingNameInData() {
 		assertTrue(dataFactory.factorRecordGroupUsingNameInData(
 				"nameInData") instanceof ClientDataRecordGroupSpy);
 	}
 
 	@Test
-	public void testFactorRecordGroupUsingNameInData() throws Exception {
+	public void testFactorRecordGroupUsingNameInData() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataRecordGroupSpy::new);
@@ -122,14 +122,14 @@ public class ClientDataFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorRecordGroupFromDataGroup() throws Exception {
+	public void testDefaultFactorRecordGroupFromDataGroup() {
 		ClientDataGroup dataGroupSpy = new ClientDataGroupSpy();
 		assertTrue(dataFactory
 				.factorRecordGroupFromDataGroup(dataGroupSpy) instanceof ClientDataRecordGroupSpy);
 	}
 
 	@Test
-	public void testFactorRecordGroupFromDataGroup() throws Exception {
+	public void testFactorRecordGroupFromDataGroup() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataRecordGroupSpy::new);
@@ -144,14 +144,14 @@ public class ClientDataFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorGroupFromDataRecordGroup() throws Exception {
+	public void testDefaultFactorGroupFromDataRecordGroup() {
 		ClientDataRecordGroup dataRecordGroupSpy = new ClientDataRecordGroupSpy();
 		assertTrue(dataFactory
 				.factorGroupFromDataRecordGroup(dataRecordGroupSpy) instanceof ClientDataGroupSpy);
 	}
 
 	@Test
-	public void testFactorGroupFromDataRecordGroup() throws Exception {
+	public void testFactorGroupFromDataRecordGroup() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataGroupSpy::new);
@@ -167,13 +167,13 @@ public class ClientDataFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorGroupUsingNameInData() throws Exception {
+	public void testDefaultFactorGroupUsingNameInData() {
 		assertTrue(
 				dataFactory.factorGroupUsingNameInData("nameInData") instanceof ClientDataGroupSpy);
 	}
 
 	@Test
-	public void testFactorGroupUsingNameInData() throws Exception {
+	public void testFactorGroupUsingNameInData() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataGroupSpy::new);
@@ -186,13 +186,13 @@ public class ClientDataFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorRecordLinkUsingNameInData() throws Exception {
+	public void testDefaultFactorRecordLinkUsingNameInData() {
 		assertTrue(dataFactory
 				.factorRecordLinkUsingNameInData("nameInData") instanceof ClientDataRecordLinkSpy);
 	}
 
 	@Test
-	public void testFactorRecordLinkUsingNameInData() throws Exception {
+	public void testFactorRecordLinkUsingNameInData() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataRecordLinkSpy::new);
@@ -206,13 +206,13 @@ public class ClientDataFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorRecordLinkUsingNameInDataAndTypeAndId() throws Exception {
+	public void testDefaultFactorRecordLinkUsingNameInDataAndTypeAndId() {
 		assertTrue(dataFactory.factorRecordLinkUsingNameInDataAndTypeAndId("nameInData", "type",
 				"id") instanceof ClientDataRecordLinkSpy);
 	}
 
 	@Test
-	public void testFactorRecordLinkUsingNameInDataAndTypeAndId() throws Exception {
+	public void testFactorRecordLinkUsingNameInDataAndTypeAndId() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataRecordLinkSpy::new);
@@ -228,34 +228,38 @@ public class ClientDataFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorResourceLinkUsingNameInData() throws Exception {
-		assertTrue(dataFactory.factorResourceLinkUsingNameInDataAndMimeType("nameInData",
-				"mimeType") instanceof ClientDataResourceLinkSpy);
+	public void testDefaultFactorResourceLinkUsingNameInData() {
+		assertTrue(
+				dataFactory.factorResourceLinkUsingNameInDataAndTypeAndIdAndMimeType("nameInData",
+						"someType", "someId", "mimeType") instanceof ClientDataResourceLinkSpy);
 	}
 
 	@Test
-	public void testFactorResourceLinkUsingNameInData() throws Exception {
+	public void testFactorResourceLinkUsingNameInData() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataResourceLinkSpy::new);
 
 		ClientDataResourceLink retunedValue = dataFactory
-				.factorResourceLinkUsingNameInDataAndMimeType("nameInData", "mimeType");
+				.factorResourceLinkUsingNameInDataAndTypeAndIdAndMimeType("nameInData", "someType",
+						"someId", "mimeType");
 
 		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
 		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "nameInData", "nameInData");
+		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "recordType", "someType");
+		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "recordId", "someId");
 		mcrForSpy.assertParameter(ADD_CALL_AND_RETURN_FROM_MRV, 0, "mimeType", "mimeType");
 		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, retunedValue);
 	}
 
 	@Test
-	public void testDefaultFactorAtomicUsingNameInDataAndValue() throws Exception {
+	public void testDefaultFactorAtomicUsingNameInDataAndValue() {
 		assertTrue(dataFactory.factorAtomicUsingNameInDataAndValue("nameInData",
 				"value") instanceof ClientDataAtomicSpy);
 	}
 
 	@Test
-	public void testFactorAtomicUsingNameInDataAndValue() throws Exception {
+	public void testFactorAtomicUsingNameInDataAndValue() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataAtomicSpy::new);
@@ -270,13 +274,13 @@ public class ClientDataFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorAtomicUsingNameInDataAndValueAndRepeatId() throws Exception {
+	public void testDefaultFactorAtomicUsingNameInDataAndValueAndRepeatId() {
 		assertTrue(dataFactory.factorAtomicUsingNameInDataAndValueAndRepeatId("nameInData", "value",
 				"repeatId") instanceof ClientDataAtomicSpy);
 	}
 
 	@Test
-	public void testFactorAtomicUsingNameInDataAndValueAndRepeatId() throws Exception {
+	public void testFactorAtomicUsingNameInDataAndValueAndRepeatId() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataAtomicSpy::new);
@@ -292,13 +296,13 @@ public class ClientDataFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorAttributeUsingNameInDataAndValue() throws Exception {
+	public void testDefaultFactorAttributeUsingNameInDataAndValue() {
 		assertTrue(dataFactory.factorAttributeUsingNameInDataAndValue("nameInData",
 				"value") instanceof ClientDataAttributeSpy);
 	}
 
 	@Test
-	public void testFactorAttributeUsingNameInDataAndValue() throws Exception {
+	public void testFactorAttributeUsingNameInDataAndValue() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataAttributeSpy::new);
@@ -313,13 +317,13 @@ public class ClientDataFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorActionLinkUsingAction() throws Exception {
+	public void testDefaultFactorActionLinkUsingAction() {
 		assertTrue(dataFactory
 				.factorActionLinkUsingAction(ClientAction.CREATE) instanceof ClientActionLink);
 	}
 
 	@Test
-	public void testFactorActionLinkUsingAction() throws Exception {
+	public void testFactorActionLinkUsingAction() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientActionLinkSpy::new);
@@ -333,13 +337,13 @@ public class ClientDataFactorySpyTest {
 	}
 
 	@Test
-	public void testDefaultFactorDataChildFilterUsingNameInData() throws Exception {
+	public void testDefaultFactorDataChildFilterUsingNameInData() {
 		assertTrue(dataFactory.factorDataChildFilterUsingNameInData(
 				"nameInData") instanceof ClientDataChildFilterSpy);
 	}
 
 	@Test
-	public void testFactorDataChildFilterUsingNameInData() throws Exception {
+	public void testFactorDataChildFilterUsingNameInData() {
 		dataFactory.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataChildFilterSpy::new);

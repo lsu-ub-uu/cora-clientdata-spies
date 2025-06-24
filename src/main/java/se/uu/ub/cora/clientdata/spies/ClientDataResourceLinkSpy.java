@@ -38,6 +38,8 @@ public class ClientDataResourceLinkSpy implements ClientDataResourceLink {
 	public ClientDataResourceLinkSpy() {
 		MCR.useMRV(MRV);
 		MRV.setDefaultReturnValuesSupplier("hasReadAction", (Supplier<Boolean>) () -> false);
+		MRV.setDefaultReturnValuesSupplier("getType", () -> "someType");
+		MRV.setDefaultReturnValuesSupplier("getId", () -> "someId");
 		MRV.setDefaultReturnValuesSupplier("getRepeatId", String::new);
 		MRV.setDefaultReturnValuesSupplier("getNameInData", String::new);
 		MRV.setDefaultReturnValuesSupplier("hasAttributes", (Supplier<Boolean>) () -> false);
@@ -50,6 +52,16 @@ public class ClientDataResourceLinkSpy implements ClientDataResourceLink {
 		MRV.setDefaultReturnValuesSupplier("getActionLink", Optional::empty);
 		MRV.setDefaultReturnValuesSupplier("getAttributeValue", Optional::empty);
 		MRV.setDefaultReturnValuesSupplier("hasRepeatId", () -> false);
+	}
+
+	@Override
+	public String getType() {
+		return (String) MCR.addCallAndReturnFromMRV();
+	}
+
+	@Override
+	public String getId() {
+		return (String) MCR.addCallAndReturnFromMRV();
 	}
 
 	@Override
@@ -121,4 +133,5 @@ public class ClientDataResourceLinkSpy implements ClientDataResourceLink {
 	public boolean hasRepeatId() {
 		return (boolean) MCR.addCallAndReturnFromMRV();
 	}
+
 }

@@ -49,12 +49,4 @@ public class ClientDataToJsonConverterFactorySpy implements ClientDataToJsonConv
 		return (ClientDataToJsonConverter) MCR.addCallAndReturnFromMRV("baseUrl", baseUrl,
 				"convertible", convertible);
 	}
-
-	@Override
-	public ClientDataToJsonConverter factorUsingBaseUrlAndRecordUrlAndConvertible(String baseUrl,
-			String recordUrl, ClientConvertible convertible) {
-		return (ClientDataToJsonConverter) MCR.addCallAndReturnFromMRV("baseUrl", baseUrl,
-				"recordUrl", recordUrl, "convertible", convertible);
-	}
-
 }
