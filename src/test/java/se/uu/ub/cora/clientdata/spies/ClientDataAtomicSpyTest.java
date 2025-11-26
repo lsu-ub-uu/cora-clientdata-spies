@@ -1,5 +1,6 @@
 /*
  * Copyright 2022 Olov McKie
+ * Copyright 2025 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -51,14 +52,14 @@ public class ClientDataAtomicSpyTest {
 	}
 
 	@Test
-	public void testMakeSureSpyHelpersAreSetUp() throws Exception {
+	public void testMakeSureSpyHelpersAreSetUp() {
 		assertTrue(dataAtomic.MCR instanceof MethodCallRecorder);
 		assertTrue(dataAtomic.MRV instanceof MethodReturnValues);
 		assertSame(dataAtomic.MCR.onlyForTestGetMRV(), dataAtomic.MRV);
 	}
 
 	@Test
-	public void testsetRepeatId() throws Exception {
+	public void testsetRepeatId() {
 		dataAtomic.MCR = MCRSpy;
 
 		dataAtomic.setRepeatId("repeat1");
@@ -67,12 +68,12 @@ public class ClientDataAtomicSpyTest {
 	}
 
 	@Test
-	public void testDefaultGetRepeatId() throws Exception {
+	public void testDefaultGetRepeatId() {
 		assertTrue(dataAtomic.getRepeatId() instanceof String);
 	}
 
 	@Test
-	public void testGetRepeatId() throws Exception {
+	public void testGetRepeatId() {
 		dataAtomic.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
 
@@ -83,7 +84,7 @@ public class ClientDataAtomicSpyTest {
 	}
 
 	@Test
-	public void testAddAttributeByIdWithValue() throws Exception {
+	public void testAddAttributeByIdWithValue() {
 		dataAtomic.MCR = MCRSpy;
 
 		dataAtomic.addAttributeByIdWithValue("attribId", "attribValue");
@@ -93,12 +94,12 @@ public class ClientDataAtomicSpyTest {
 	}
 
 	@Test
-	public void testDefaultHasAttributes() throws Exception {
+	public void testDefaultHasAttributes() {
 		assertFalse(dataAtomic.hasAttributes());
 	}
 
 	@Test
-	public void testHasAttributes() throws Exception {
+	public void testHasAttributes() {
 		dataAtomic.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				(Supplier<Boolean>) () -> true);
@@ -110,12 +111,12 @@ public class ClientDataAtomicSpyTest {
 	}
 
 	@Test
-	public void testDefaultGetAttribute() throws Exception {
+	public void testDefaultGetAttribute() {
 		assertTrue(dataAtomic.getAttribute("nameInData") instanceof ClientDataAttribute);
 	}
 
 	@Test
-	public void testGetAttribute() throws Exception {
+	public void testGetAttribute() {
 		dataAtomic.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ClientDataAttributeSpy::new);
@@ -127,12 +128,12 @@ public class ClientDataAtomicSpyTest {
 	}
 
 	@Test
-	public void testDefaultGetAttributes() throws Exception {
+	public void testDefaultGetAttributes() {
 		assertTrue(dataAtomic.getAttributes() instanceof Collection<ClientDataAttribute>);
 	}
 
 	@Test
-	public void testGetAttributes() throws Exception {
+	public void testGetAttributes() {
 		dataAtomic.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				ArrayList<ClientDataAttribute>::new);
@@ -144,12 +145,12 @@ public class ClientDataAtomicSpyTest {
 	}
 
 	@Test
-	public void testDefaultGetNameInData() throws Exception {
+	public void testDefaultGetNameInData() {
 		assertTrue(dataAtomic.getNameInData() instanceof String);
 	}
 
 	@Test
-	public void testGetNameInData() throws Exception {
+	public void testGetNameInData() {
 		dataAtomic.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
 
@@ -160,12 +161,12 @@ public class ClientDataAtomicSpyTest {
 	}
 
 	@Test
-	public void testDefaultGetValue() throws Exception {
+	public void testDefaultGetValue() {
 		assertTrue(dataAtomic.getValue() instanceof String);
 	}
 
 	@Test
-	public void testGetValue() throws Exception {
+	public void testGetValue() {
 		dataAtomic.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
 
@@ -176,7 +177,16 @@ public class ClientDataAtomicSpyTest {
 	}
 
 	@Test
-	public void testDefaultGetAttributeValue() throws Exception {
+	public void testsetValue() {
+		dataAtomic.MCR = MCRSpy;
+
+		dataAtomic.setValue("someValue");
+
+		mcrForSpy.assertParameter(ADD_CALL, 0, "value", "someValue");
+	}
+
+	@Test
+	public void testDefaultGetAttributeValue() {
 
 		Optional<String> returnedValue = dataAtomic.getAttributeValue("someNameInData");
 
@@ -184,7 +194,7 @@ public class ClientDataAtomicSpyTest {
 	}
 
 	@Test
-	public void testGetAttributeValue() throws Exception {
+	public void testGetAttributeValue() {
 		dataAtomic.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV,
 				() -> Optional.of("someValueToReturn"));
@@ -197,12 +207,12 @@ public class ClientDataAtomicSpyTest {
 	}
 
 	@Test
-	public void testDefaultHasRepeatId() throws Exception {
+	public void testDefaultHasRepeatId() {
 		assertFalse(dataAtomic.hasRepeatId());
 	}
 
 	@Test
-	public void testHasRepeatId() throws Exception {
+	public void testHasRepeatId() {
 		dataAtomic.MCR = MCRSpy;
 		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, () -> true);
 

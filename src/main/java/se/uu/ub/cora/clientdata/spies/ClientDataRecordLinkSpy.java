@@ -1,5 +1,6 @@
 /*
  * Copyright 2022 Olov McKie
+ * Copyright 2025 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -95,6 +96,11 @@ public class ClientDataRecordLinkSpy implements ClientDataRecordLink {
 	}
 
 	@Override
+	public void setLinkedRecordId(String setLinkedRecordId) {
+		MCR.addCall("setLinkedRecordId", setLinkedRecordId);
+	}
+
+	@Override
 	public String getLinkedRecordType() {
 		return (String) MCR.addCallAndReturnFromMRV();
 	}
@@ -118,4 +124,5 @@ public class ClientDataRecordLinkSpy implements ClientDataRecordLink {
 	public boolean hasRepeatId() {
 		return (boolean) MCR.addCallAndReturnFromMRV();
 	}
+
 }

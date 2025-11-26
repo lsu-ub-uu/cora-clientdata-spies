@@ -1,5 +1,6 @@
 /*
  * Copyright 2022 Olov McKie
+ * Copyright 2025 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -29,6 +30,8 @@ import se.uu.ub.cora.testutils.mrv.MethodReturnValues;
 import se.uu.ub.cora.testutils.spies.MCRSpy;
 
 public class ClientDataAttributeSpyTest {
+	private static final String ADD_CALL = "addCall";
+	private static final String ADD_CALL_AND_RETURN_FROM_MRV = "addCallAndReturnFromMRV";
 	ClientDataAttributeSpy dataAttribute;
 	private MCRSpy MCRSpy;
 	private MethodCallRecorder mcrForSpy;
@@ -41,41 +44,50 @@ public class ClientDataAttributeSpyTest {
 	}
 
 	@Test
-	public void testMakeSureSpyHelpersAreSetUp() throws Exception {
+	public void testMakeSureSpyHelpersAreSetUp() {
 		assertTrue(dataAttribute.MCR instanceof MethodCallRecorder);
 		assertTrue(dataAttribute.MRV instanceof MethodReturnValues);
 		assertSame(dataAttribute.MCR.onlyForTestGetMRV(), dataAttribute.MRV);
 	}
 
 	@Test
-	public void testDefaultGetNameInData() throws Exception {
+	public void testDefaultGetNameInData() {
 		assertTrue(dataAttribute.getNameInData() instanceof String);
 	}
 
 	@Test
-	public void testGetNameInData() throws Exception {
+	public void testGetNameInData() {
 		dataAttribute.MCR = MCRSpy;
-		MCRSpy.MRV.setDefaultReturnValuesSupplier("addCallAndReturnFromMRV", String::new);
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
 
 		String returnedValue = dataAttribute.getNameInData();
 
-		mcrForSpy.assertMethodWasCalled("addCallAndReturnFromMRV");
-		mcrForSpy.assertReturn("addCallAndReturnFromMRV", 0, returnedValue);
+		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
 	}
 
 	@Test
-	public void testDefaultGetValue() throws Exception {
+	public void testDefaultGetValue() {
 		assertTrue(dataAttribute.getValue() instanceof String);
 	}
 
 	@Test
-	public void testGetValue() throws Exception {
+	public void testGetValue() {
 		dataAttribute.MCR = MCRSpy;
-		MCRSpy.MRV.setDefaultReturnValuesSupplier("addCallAndReturnFromMRV", String::new);
+		MCRSpy.MRV.setDefaultReturnValuesSupplier(ADD_CALL_AND_RETURN_FROM_MRV, String::new);
 
 		String returnedValue = dataAttribute.getValue();
 
-		mcrForSpy.assertMethodWasCalled("addCallAndReturnFromMRV");
-		mcrForSpy.assertReturn("addCallAndReturnFromMRV", 0, returnedValue);
+		mcrForSpy.assertMethodWasCalled(ADD_CALL_AND_RETURN_FROM_MRV);
+		mcrForSpy.assertReturn(ADD_CALL_AND_RETURN_FROM_MRV, 0, returnedValue);
+	}
+
+	@Test
+	public void testsetValue() {
+		dataAttribute.MCR = MCRSpy;
+
+		dataAttribute.setValue("someValue");
+
+		mcrForSpy.assertParameter(ADD_CALL, 0, "value", "someValue");
 	}
 }

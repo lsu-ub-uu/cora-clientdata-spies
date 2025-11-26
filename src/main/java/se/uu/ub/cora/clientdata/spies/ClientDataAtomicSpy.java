@@ -1,5 +1,6 @@
 /*
  * Copyright 2022 Olov McKie
+ * Copyright 2025 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -86,6 +87,11 @@ public class ClientDataAtomicSpy implements ClientDataAtomic {
 	}
 
 	@Override
+	public void setValue(String value) {
+		MCR.addCall("value", value);
+	}
+
+	@Override
 	public Optional<String> getAttributeValue(String nameInData) {
 		return (Optional<String>) MCR.addCallAndReturnFromMRV("nameInData", nameInData);
 	}
@@ -94,4 +100,5 @@ public class ClientDataAtomicSpy implements ClientDataAtomic {
 	public boolean hasRepeatId() {
 		return (boolean) MCR.addCallAndReturnFromMRV();
 	}
+
 }

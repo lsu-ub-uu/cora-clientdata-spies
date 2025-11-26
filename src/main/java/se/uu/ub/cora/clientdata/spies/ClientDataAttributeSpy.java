@@ -1,5 +1,6 @@
 /*
  * Copyright 2022 Olov McKie
+ * Copyright 2025 Uppsala University Library
  *
  * This file is part of Cora.
  *
@@ -40,6 +41,11 @@ public class ClientDataAttributeSpy implements ClientDataAttribute {
 	@Override
 	public String getValue() {
 		return (String) MCR.addCallAndReturnFromMRV();
+	}
+
+	@Override
+	public void setValue(String value) {
+		MCR.addCall("value", value);
 	}
 
 }
